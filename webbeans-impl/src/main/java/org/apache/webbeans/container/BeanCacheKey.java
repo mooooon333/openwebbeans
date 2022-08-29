@@ -294,6 +294,8 @@ public final class BeanCacheKey
 
             Method[] member1 = type1.getDeclaredMethods();
             Method[] member2 = type2.getDeclaredMethods();
+            Arrays.sort(member1, MethodComparator.METHOD_COMPARATOR);
+            Arrays.sort(member2, MethodComparator.METHOD_COMPARATOR);
 
             // TBD: the order of the list of members seems to be deterministic
 
@@ -387,6 +389,15 @@ public final class BeanCacheKey
             }
         }
     }
+    private static class MethodComparator implements Comparator<Method> 
+    {
+        public static final MethodComparator METHOD_COMPARATOR = new MethodComparator();
+        @Override
+        public int compare(Method arg0, Method arg1) 
+        {
+            return arg0.getName().compareTo(arg1.getName());
+        }
+    } 
 
     private static final class LazyAnnotatedTypes
     {
